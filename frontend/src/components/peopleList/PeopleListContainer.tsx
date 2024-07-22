@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { People } from "./types";
 import PeopleList from "./PeopleList";
+import { getAppConfigs } from "../../config/AppConfigs";
+
+const AppConfigs = getAppConfigs();
+const { API_URL } = AppConfigs;
 
 const PeopleListContainer = () => {
   const [people, setPeople] = useState<People>([]);
@@ -11,9 +15,7 @@ const PeopleListContainer = () => {
     async function fetchData() {
       try {
         setLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_NODEJS_API_URL}/people`
-        );
+        const response = await fetch(`${API_URL}/people`);
         const data = await response.json();
 
         setPeople(data);
